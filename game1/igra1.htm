@@ -1,0 +1,70 @@
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+            #tbl {margin:20vh auto; border-collapse: collapse;}
+            td, tr { width: 100px; height: 100px; text-align: center;border: 2px solid orange ; font-size:1.5em;   }
+            td:hover { background-color: yellow;}         
+        </style>
+    </head>
+    <body>
+        <table id="tbl">
+            <caption id="t">10</caption>
+        </table>
+        
+        <script>
+            let tbl = document.getElementById("tbl");
+            let y = 1;
+            let sec = 10;
+            let kod = "" ;
+            let arr = [];
+
+            for(let i = 1; i <= 16; i++){
+            arr.push(i);
+            }
+
+            let time = setInterval(timer, 1000);
+
+            function timer(){
+                let t = document.getElementById("t");
+                if (sec < 1 ) { clearInterval(time)
+                let conf = confirm("You lose . Do you want play again?")
+                if(conf == true ) location.reload();
+                }
+                else sec--;
+                t.innerHTML = sec;
+            }
+
+            for(let i = 1 ; i <= 4; i++ ){
+                kod += "<tr>"; 
+                for (let j = 1; j <= 4; j++ ){
+                    let x = rand(0, arr.length - 1)
+                    kod += '<td id="td'+ arr[x] +'" onclick="klik('+ arr[x] +')" >'+ arr[x] +'</td>';
+                    arr.splice(x,1);
+                } 
+                kod += "</tr>";
+            }    
+
+            function klik(a){
+                if( y == 16 ) {let conf = confirm("You win . Do you want play again?") 
+                    clearInterval(time)
+                    if(conf == true ) location.reload();
+                }    
+                if (y == a) document.getElementById("td"+ a).style.backgroundColor="green";
+                else {document.getElementById("td"+ a).style.backgroundColor="red";clearInterval(time) ;
+                let conf = confirm("You lose . Do you want play again?")
+                if(conf == true ) location.reload()}
+                y++;
+                   
+            }
+
+            tbl.innerHTML += kod;
+
+            function rand(min, max) {
+            return Math.floor(Math.random() * (max - min + 1) ) + min;
+            }
+        </script> 
+    </body>
+</html>

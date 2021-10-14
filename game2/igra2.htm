@@ -1,0 +1,55 @@
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+
+        <style>
+            #tbl {border-collapse: collapse; margin: 20vh auto; }
+            td, tr { border: 2px solid orange; text-align: center; width: 100px; height: 100px; font-size: 1.5em ; }
+        </style>
+    </head>
+    <body>
+        <table id="tbl"></table>
+
+        <script>
+            let tbl = document.getElementById("tbl");
+            let kod = "";
+            let mas = [""];
+            let hole = [];
+            for(let i = 1; i < 16; i++){
+                mas.push(i);
+            }
+
+            for(let i = 1; i <= 4; i++ ){
+                kod += "<tr>";
+                for(let j = 1; j <= 4; j++ ){
+                    let x = rand(0, mas.length - 1);
+                    kod += '<td id="td'+ i + j +'" onclick="move('+ i +','+ j +')">'+ mas[x] +'</td>';
+                    if (mas[x] == "") hole = [i, j];
+                    mas.splice(x, 1);
+                }
+                kod += "</tr>";
+            }
+            function move(i, j){
+                if(i == hole[0] && Math.abs(j - hole[1])==1 ||
+                   j == hole[1] && Math.abs(i - hole[0])==1 ){
+                       document.getElementById("td" + hole[0] + hole[1]).innerHTML = document.getElementById("td" + i + j).innerHTML;
+                       document.getElementById("td" + i + j).innerHTML = "";
+                       hole = [i, j]
+                }       
+            }
+            for(let j=1; j<5; j++){
+                if ((document.getElementById('"td1'+ j +'"') == j ) && (document.getElementById('"td2'+ j +'"') <(j+4) ) && 
+                    (document.getElementById('"td3'+ j +'"') < (j+8)) && ((document.getElementById('"td4'+ j +'"') <(j + 12))||
+                     document.getElementById("td44") == "" )) alert("you win");
+            }
+            function rand(min, max) {
+                return Math.floor(Math.random() * (max - min + 1) ) + min;
+                }
+
+            tbl.innerHTML = kod;
+        </script>
+    </body>
+</html>
